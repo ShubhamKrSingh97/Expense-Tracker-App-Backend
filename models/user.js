@@ -28,5 +28,10 @@ module.exports = class User {
             Email: this.email,
             Password: this.password
         });
-    }
+    };
+    static userLogin(email){
+        return Data.findOne({
+            where:{Email:email}
+        });
+    };
 };

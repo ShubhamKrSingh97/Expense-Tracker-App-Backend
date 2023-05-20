@@ -7,6 +7,7 @@ const path = require('path');
 const cors = require('cors');
 
 const addUserRoute = require('./routes/add-user-route');
+const userLoginRoute=require('./routes/user-login-route');
 app.use(cors());
 app.use(bodyParser.json({ encoded: false }));
 
@@ -19,6 +20,8 @@ app.get('/', (req, res) => {
 })
 
 app.use(addUserRoute);
+app.use(userLoginRoute);
+
 
 sequelize.sync().then(result => {
     app.listen('4000');
