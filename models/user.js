@@ -1,7 +1,12 @@
 const sequelize = require('../util/database');
 const Sequelize = require('sequelize');
 
-const Data = sequelize.define('users', {
+const User = sequelize.define('users', {
+    id:{
+        type:Sequelize.INTEGER,
+        primaryKey:true,
+        autoIncrement:true
+    },
     Name: {
         type: Sequelize.STRING,
         allowNull: false
@@ -16,22 +21,28 @@ const Data = sequelize.define('users', {
         allowNull: false
     }
 });
-module.exports = class User {
+ class UserModel {
     constructor(name, email, password) {
         this.name = name;
         this.email = email;
         this.password = password
     };
     addUser() {
-        return Data.create({
+        return User.create({
             Name: this.name,
             Email: this.email,
             Password: this.password
         });
     };
     static userLogin(email){
-        return Data.findOne({
+        return User.findOne({
             where:{Email:email}
         });
     };
+    static findUser(id){
+        return User.findOne({
+            where:{id:id}
+        });
+    }
 };
+module.exports={User,UserModel};

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="/style/expense.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <div class="nav">
+        <nav>
+            <ul>
+                <li><a href="#">Leaderboard</a></li>
+                <li><a href="#">Buy Premium</a></li>
+                <li><a href="#">Reports</a></li>
+            </ul>
+        </nav>
+    </div>
+    <main>
+        <div class="expbar">
+            <form id="exp-form">
+                <div class="input-box">
+                    <label for="amount">Enter amount</label>
+                    <input type="number" name="amount" id="exp-amt">
+                </div>
+                <div class="input-box">
+                    <label for="desc">Enter description</label>
+                    <input type="text" name="desc" id="exp-desc">
+                </div>
+                <div class="input-box">
+                    <label for="category">Choose type</label>
+                    <select name="category" id="category">
+                        <option value="Fashion and clothing">Fashion and clothing</option>
+                        <option value="Education">Education</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Utilities">Utilities</option>
+                        <option value="Rent">Rent</option>
+                        <option value="Groceries">Groceries</option>
+                        <option value="Foods and beverages">Foods and beverages</option>
+                        <option value="Makeup and accessories">Makeup and accessories</option>
+                    </select>
+                </div>
+                <button type="submit">Add Expense</button>
+            </form>
+        </div>
+        <div class="exp-table">
+            <table>
+                <tr>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Amount</th>
+                    <th></th>
+                </tr>
+                <tbody id="tbody"></tbody>
+            </table>
+
+        </div>
+    </main>
+    <script src="/DOM/expense.js"></script>
+</body>
+
+</html>

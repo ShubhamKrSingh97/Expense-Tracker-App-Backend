@@ -29,23 +29,27 @@ const checkBox = document.getElementById('check');
 
 regForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (regEmail.value && regName.value && regPassword.value) {
+        let obj = {
+            name: regName.value,
+            email: regEmail.value,
+            pass: regPassword.value
+        };
+        try {
+            await axios.post("http://localhost:4000/add-user", obj)
+            regEmail.value = "";
+            regName.value = "";
+            regPassword.value = "";
+            checkBox.checked = false;
+        }
+        catch (err) {
+            alert(err.response.data.message);
+        }
 
-    let obj = {
-        name: regName.value,
-        email: regEmail.value,
-        pass: regPassword.value
-    };
-    try {
-        await axios.post("http://localhost:4000/add-user", obj)
-        regEmail.value = "";
-        regName.value = "";
-        regPassword.value = "";
-        checkBox.checked = false;
     }
-    catch (err) {
-        alert(err.response.data.message);
+    else {
+        alert("Please fill in all the details");
     }
-
 });
 
 //-----------------------Login---------------------------------//
@@ -54,16 +58,22 @@ const loginEmail = document.getElementById('login-email');
 const loginPassword = document.getElementById('login-pass');
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    obj = {
-        pass: loginPassword.value,
-        email: loginEmail.value
+    if (loginEmail.value && loginPassword.value) {
+        obj = {
+            pass: loginPassword.value,
+            email: loginEmail.value
+        }
+        try {
+            let msg = await axios.post(`http://localhost:4000/user-login`, obj);
+            alert(msg.data.message);
+            localStorage.setItem('key',msg.data.id);
+            window.location.href="expense-tracker";
+        } catch (err) {
+            alert(err.response.data.message);
+        }
     }
-    try {
-        let msg = await axios.post(`http://localhost:4000/user-login`, obj);
-        alert(msg.data.message);
-
-    } catch (err) {
-        alert(err.response.data.message);
+    else {
+        alert("Please fill in all the details");
     }
 
 });
