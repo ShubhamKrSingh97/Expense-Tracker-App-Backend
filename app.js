@@ -5,12 +5,15 @@ const sequelize = require('./util/database');
 const fs = require('fs');
 const path = require('path');
 const cors = require('cors');
+require('dotenv').config();
+
 // const Expense=require('./models/expense');
 const addUserRoute = require('./routes/add-user-route');
 const userLoginRoute=require('./routes/user-login-route');
 const addExpenseRoute=require('./routes/add-expense-route');
 const getAllExpensesRoute=require('./routes/get-all-expenses-route');
 const deleteExpenseRoute=require('./routes/delete-expense-route');
+const purchasePremiumRoute=require('./routes/purchase-premium-route');
 app.use(cors());
 app.use(bodyParser.json({ encoded: false }));
 
@@ -33,8 +36,7 @@ app.use(userLoginRoute);
 app.use(addExpenseRoute);
 app.use(getAllExpensesRoute);
 app.use(deleteExpenseRoute);
-
-
+app.use(purchasePremiumRoute);
 
 sequelize.sync().then(result => {
     app.listen('4000');

@@ -19,6 +19,10 @@ const User = sequelize.define('users', {
     Password: {
         type: Sequelize.STRING,
         allowNull: false
+    },
+    PremiumUser:{
+        type:Sequelize.BOOLEAN,
+        allowNull:true
     }
 });
  class UserModel {

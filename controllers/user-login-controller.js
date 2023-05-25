@@ -2,7 +2,7 @@ const { UserModel } = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 function generateToken(id) {
-    return jwt.sign({ id: id }, 'SECRET_KEY');
+    return jwt.sign({ id: id }, 'secret_key');
 }
 
 module.exports = async (req, res) => {
