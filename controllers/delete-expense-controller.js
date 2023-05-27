@@ -1,10 +1,16 @@
-const { ExpenseModel } = require('../models/expense');
-
+const { ExpenseModel,Expense } = require('../models/expense');
+const {UserModel}=require('../models/user');
 module.exports = async (req, res) => {
     try {
+        let amt=await Expense.findOne({where:{id:req.params.id}});
         let rowsDeleted = await ExpenseModel.deleteExpense(req.params.id, req.user.id);
         if (rowsDeleted == 0) {
             return res.status(500).json({ message: "Expense does not belong to the user" });
+        }
+        else{
+            let usr=await UserModel.findUser(req.user.id);
+            let totalAmt=usr.TotalExpense-Number(amt.amount);
+            await UserModel.updateTotalExp(usr.id,totalAmt);
         }
     } catch (err) {
         return res.status(404).json({

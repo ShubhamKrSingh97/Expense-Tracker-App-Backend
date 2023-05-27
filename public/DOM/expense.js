@@ -3,6 +3,8 @@ const category = document.getElementById('category');
 const amount = document.getElementById('exp-amt');
 const description = document.getElementById('exp-desc');
 const tbody = document.getElementById('tbody');
+const premiumBtn = document.getElementById('premium-btn');
+const leaderBoardBtn=document.getElementById('leader-btn');
 
 expenseForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -25,8 +27,20 @@ expenseForm.addEventListener('submit', async (e) => {
     }
 });
 
+function decodeJwtToken(token) {
+    const base64Url = token.split('.')[1]; // Extract the payload from the JWT token
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // Replace URL-safe characters
+    const rawPayload = atob(base64); // Decode the base64-encoded payload
+    const payload = JSON.parse(rawPayload); // Parse the JSON payload
+    return payload;
+  }
+
 document.addEventListener('DOMContentLoaded', async (e) => {
+    
     let token = localStorage.getItem('key');
+    if(decodeJwtToken(token).premium){
+        premiumBtn.style.display='none';
+    }
     try {
         const res = await axios.get("http://localhost:4000/get-all-expenses", { headers: { "Authorization": token } });
         for (let i = 0; i < res.data.length; i++) {
@@ -73,7 +87,8 @@ function displayOnScreen(obj) {
 
     });
 };
-const premiumBtn = document.getElementById('premium-btn');
+
+
 const token = localStorage.getItem('key');
 
 premiumBtn.addEventListener('click', async (e) => {
@@ -89,9 +104,9 @@ premiumBtn.addEventListener('click', async (e) => {
                     payment_id: response.razorpay_payment_id,
                     status: "SUCCESS"
                 }, { headers: { 'Authorization': token } });
-
+                localStorage.setItem('key',res.data.token);
                 premiumBtn.style.display='none';
-               // localStorage.set('key',res.data.id);
+                
                 alert(res.data.message);
             }
         }
@@ -104,4 +119,13 @@ premiumBtn.addEventListener('click', async (e) => {
         alert(err.response.data.message);
     }
 
+});
+leaderBoardBtn.addEventListener('click',async(e)=>{
+    const token = localStorage.getItem('key');
+    if(decodeJwtToken(token).premium){
+       window.location.href="/premium/leaderboard"
+    }
+    else{
+        alert('Buy Premium to access Premium features');
+    }
 });

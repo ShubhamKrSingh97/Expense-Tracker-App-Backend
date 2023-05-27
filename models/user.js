@@ -23,6 +23,10 @@ const User = sequelize.define('users', {
     PremiumUser:{
         type:Sequelize.BOOLEAN,
         allowNull:true
+    },
+    TotalExpense:{
+        type:Sequelize.INTEGER,
+        defaultValue:0
     }
 });
  class UserModel {
@@ -47,6 +51,14 @@ const User = sequelize.define('users', {
         return User.findOne({
             where:{id:id}
         });
+    }
+    static updateTotalExp(id,val){
+        return User.update({
+            TotalExpense:val
+        },{where:{id:id}})
+    }
+    static getAllUsers(){
+        return User.findAll();
     }
 };
 module.exports={User,UserModel};

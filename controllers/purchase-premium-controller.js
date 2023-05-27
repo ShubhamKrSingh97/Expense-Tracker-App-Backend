@@ -1,12 +1,18 @@
 const Razorpay = require('razorpay');
 const Order = require('../models/order');
 const { User } = require('../models/user');
+const jwt=require('jsonwebtoken');
+
+function generateToken(id){
+    return jwt.sign({ id: id, premium:true },'secret_key');
+}
+
 
 const prePayment = async (req, res) => {
     try {
         const rzp = new Razorpay({
-            key_id: 'rzp_test_cIHFxFYYlAZsr',
-            key_secret: 'p2tcuBpfenVGvVKxw4s1YWg'
+            key_id: process.env.RAZORPAY_KEY_ID,
+            key_secret: process.env.RAZORPAY_KEY_SECRET
         })
         const orderDetails = await rzp.orders.create({
             amount: 10000,
@@ -37,7 +43,7 @@ const postPayment = async (req, res) => {
             await User.update({
                 PremiumUser: true
             }, { where: { id: req.user.id } });
-            res.status(202).json({ message: 'You are a Premium User' });
+            return res.status(202).json({ message: 'You are a Premium User',token:generateToken(req.user.id)});
         }
         else {
             await Order.update({

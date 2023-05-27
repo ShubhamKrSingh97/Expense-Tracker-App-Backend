@@ -66,14 +66,15 @@ loginForm.addEventListener('submit', async (e) => {
         try {
             let msg = await axios.post(`http://localhost:4000/user-login`, obj);
             alert(msg.data.message);
-            localStorage.setItem('key',msg.data.id);
+            console.log(msg.data);
+            localStorage.setItem('key',msg.data.token);
             window.location.href="expense-tracker";
         } catch (err) {
             alert(err.response.data.message);
         }
     }
     else {
-        alert("Please fill in all the details");
+        alert("Please fill in all the details");   
     }
 
 });

@@ -18,7 +18,8 @@ const Expense = sequelize.define('expenses', {
     description: {
         type: Sequelize.STRING,
         allowNull: false
-    }
+    },
+  
 });
 User.hasMany(Expense, { foreignKey: 'userId' });
 Expense.belongsTo(User, { foreignKey: 'userId' });
