@@ -44,6 +44,9 @@
     outline: none;
     position: relative;
 }
+.toggle:focus{
+    color: white;
+}
 
 #btn {
     top: 0;
@@ -104,11 +107,14 @@ span {
     position: absolute;
 }
 
-a {
+#forgot {
+    background-color: transparent;
     color: #777;
     font-size: 12px;
     bottom: 52px;
     position: absolute;
+    border: none;
+    cursor: pointer;
 }
 
 #login {
@@ -117,4 +123,10 @@ a {
 
 #register {
     left: 450px;
+}
+#forgot-pass{
+    left:450px;
+}
+#forgot-sub-btn{
+    margin-top: 10%;
 }

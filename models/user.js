@@ -35,30 +35,35 @@ const User = sequelize.define('users', {
         this.email = email;
         this.password = password
     };
-    addUser() {
+    addUser(options) {
         return User.create({
             Name: this.name,
             Email: this.email,
             Password: this.password
-        });
+        },options);
     };
     static userLogin(email){
         return User.findOne({
             where:{Email:email}
         });
     };
-    static findUser(id){
+    static findUser(id,options){
         return User.findOne({
             where:{id:id}
-        });
+        },options);
     }
-    static updateTotalExp(id,val){
+    static updateTotalExp(id,val,options){
         return User.update({
             TotalExpense:val
-        },{where:{id:id}})
+        },{where:{id:id}},options)
     }
     static getAllUsers(){
         return User.findAll();
+    }
+    static updatePass(pass,id){
+        return User.update({
+            Password:pass
+        },{where:{id:id}})
     }
 };
 module.exports={User,UserModel};

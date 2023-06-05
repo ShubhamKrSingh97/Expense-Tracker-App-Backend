@@ -22,7 +22,7 @@
             <form class="input-group" id="login">
                 <input type="email" class="input-field" id="login-email" placeholder="Email" required>
                 <input type="password" class="input-field" id="login-pass" placeholder="Enter password" required>
-                <p class="check-box"><i class='bx bx-error-alt'></i></p><a href="#">Forgot Password</a>
+                <p class="check-box"><i class='bx bx-error-alt'></i></p><button id="forgot">Forgot password</button>
                 <button type="submit" class="submit-btn" id="login-sub-btn">Log In</button>
             </form>
             <form class="input-group" id="register">
@@ -33,9 +33,13 @@
                     conditions</span>
                 <button type="submit" class="submit-btn" id="reg-sub-btn">Register</button>
             </form>
+            <form class="input-group" id="forgot-pass">
+                <input type="email" class="input-field" id="forgot-email" placeholder="Enter Email" required>
+                <button type="submit" class="submit-btn" id="forgot-sub-btn">Submit</button>
+            </form>
         </div>
     </div>
-
+   
     <script src="/DOM/signup-login.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
 </body>

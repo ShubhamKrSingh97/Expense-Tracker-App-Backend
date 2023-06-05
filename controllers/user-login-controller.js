@@ -1,8 +1,9 @@
 const { UserModel } = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 function generateToken(id,premium) {
-    return jwt.sign({ id: id, premium:premium }, 'secret_key');
+    return jwt.sign({ id: id, premium:premium }, process.env.JWT_SECRET_KEY);
 }
 
 module.exports = async (req, res) => {
@@ -10,6 +11,7 @@ module.exports = async (req, res) => {
         const userData = await UserModel.userLogin(req.body.email);
         bcrypt.compare(req.body.pass, userData.dataValues.Password, (err, result) => {
             if (err) {
+                console.log(err);
                 return res.status(500).json({ success: false, message: 'Something went wrong', });
             }
             if (result) {
@@ -21,7 +23,7 @@ module.exports = async (req, res) => {
         });
 
     } catch (err) {
-        return res.status(404).json({ success: false, message: 'Account does not exist. Create account.' })
+        res.status(404).json({ success: false, message: 'Account does not exist. Create account.' })
     }
 
 }

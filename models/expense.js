@@ -30,21 +30,21 @@ Expense.belongsTo(User, { foreignKey: 'userId' });
         this.amount = amount;
         this.description = description
     }
-    addExpense(id) {
+    addExpense(id,options) {
         return Expense.create({
             amount: this.amount,
             category: this.category,
             description: this.description,
             userId:id
-        });
+        },options);
     }
-    static deleteExpense(ID,id) {
+    static deleteExpense(ID,id,options) {
         console.log(ID,id);
         return Expense.destroy({
             where: {
                 id: ID, userId:id
             }
-        });
+        },options);
     }
     static findAllExpenses(id) {
         return Expense.findAll({where:{userId:id}});
