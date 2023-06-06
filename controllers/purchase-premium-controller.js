@@ -2,7 +2,7 @@ const Razorpay = require('razorpay');
 const Order = require('../models/order');
 const { User } = require('../models/user');
 const jwt = require('jsonwebtoken');
-const sequelize=require('../util/database');
+const {sequelize}=require('../util/database');
 require('dotenv').config();
 function generateToken(id) {
     return jwt.sign({ id: id, premium: true }, process.env.JWT_SECRET_KEY);

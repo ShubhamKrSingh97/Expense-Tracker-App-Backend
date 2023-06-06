@@ -129,3 +129,13 @@ leaderBoardBtn.addEventListener('click',async(e)=>{
         alert('Buy Premium to access Premium features');
     }
 });
+const reportsButton=document.getElementById('reports-btn');
+reportsButton.addEventListener('click',async (e)=>{
+    const token=localStorage.getItem('key');
+    if(decodeJwtToken(token).premium){
+        window.location.href="/premium/reports"
+    }
+    else{
+        alert('Buy Premium to access Premium features');
+    }
+})

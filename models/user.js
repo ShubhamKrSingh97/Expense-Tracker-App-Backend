@@ -1,11 +1,11 @@
-const sequelize = require('../util/database');
+const {sequelize} = require('../util/database');
 const Sequelize = require('sequelize');
 
 const User = sequelize.define('users', {
     id:{
-        type:Sequelize.INTEGER,
+        type:Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey:true,
-        autoIncrement:true
     },
     Name: {
         type: Sequelize.STRING,
@@ -47,10 +47,10 @@ const User = sequelize.define('users', {
             where:{Email:email}
         });
     };
-    static findUser(id,options){
+    static findUser(id){
         return User.findOne({
             where:{id:id}
-        },options);
+        });
     }
     static updateTotalExp(id,val,options){
         return User.update({
@@ -60,10 +60,10 @@ const User = sequelize.define('users', {
     static getAllUsers(){
         return User.findAll();
     }
-    static updatePass(pass,id){
+    static updatePass(pass,id,options){
         return User.update({
             Password:pass
-        },{where:{id:id}})
+        },{where:{id:id}},options)
     }
 };
 module.exports={User,UserModel};

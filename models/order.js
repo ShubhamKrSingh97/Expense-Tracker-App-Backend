@@ -1,11 +1,10 @@
-const sequelize=require('../util/database');
+const {sequelize}=require('../util/database');
 const Sequelize=require('sequelize');
 const {User}=require('./user');
 const Order=sequelize.define('orders',{
     id:{
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull:false,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey:true
     },
     orderid:Sequelize.STRING,

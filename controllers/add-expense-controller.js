@@ -1,6 +1,6 @@
 const { ExpenseModel } = require('../models/expense');
 const {UserModel}=require('../models/user');
-const sequelize=require('../util/database');
+const {sequelize}=require('../util/database');
 
 
 module.exports = async (req, res) => {

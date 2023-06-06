@@ -1,10 +1,10 @@
-const sequelize = require('../util/database');
+const {sequelize} = require('../util/database');
 const Sequelize = require('sequelize');
 const {User}=require('./user');
 const Expense = sequelize.define('expenses', {
     id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true
     },
     category: {
