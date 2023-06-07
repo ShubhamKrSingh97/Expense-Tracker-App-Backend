@@ -1,6 +1,8 @@
 const{UserModel}=require('../models/user');
-const{Expense}=require('../models/expense');
+const{Expense,ExpenseModel}=require('../models/expense');
 const {Op, sequelize}=require('../util/database');
+const { uploadtoS3 } = require('../services/AWS');
+require('dotenv').config();
 
 const leaderBoard=async (req,res)=>{
     try{
@@ -54,5 +56,19 @@ const yearlyReport=async(req,res)=>{
     }
 }
 
+const downloadReport=async(req,res)=>{
+    try{
+        const allExpenses=await ExpenseModel.findAllExpenses(req.user.id);
+        const stringifiedExpenses=JSON.stringify(allExpenses);
+        const filename=`Expenses/${req.user.id}/${new Date()}.text`;
+        const fileURL=await uploadtoS3(stringifiedExpenses,filename);
+        res.status(202).json({message:fileURL})
+    }catch(err){
+        console.log(err);
+        return res.status(500).send({message:'Something went wrong'});
+    }
 
-module.exports={leaderBoard,monthlyReport,yearlyReport};
+}
+
+
+module.exports={leaderBoard,monthlyReport,yearlyReport,downloadReport};

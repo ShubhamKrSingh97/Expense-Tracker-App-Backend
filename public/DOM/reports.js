@@ -1,5 +1,6 @@
 const monthly_t_body=document.getElementById('monthExp-body');
 const yearly_t_body=document.getElementById('yearlyExp-body');
+const downloadReportsBtn=document.getElementById('download-report');
 
 document.addEventListener('DOMContentLoaded',async (e)=>{
     const token=localStorage.getItem('key');
@@ -51,3 +52,18 @@ function displayYearly(res){
     row.innerHTML=`<td>${date}</td><td>${res.totalExpense}</td>`;
     yearly_t_body.append(row);
 }
+downloadReportsBtn.addEventListener('click',async (e)=>{
+    const token=localStorage.getItem('key');
+    try{
+        const res=await axios.get("http://localhost:4000/premium/reports/download",{headers:{'Authorization':token,'month':month}});
+        console.log(res.data.message);
+        const a=document.createElement('a');
+        a.href=res.data.message;
+        a.download='myexpense.csv';
+        a.click();
+    }catch(err){
+       // alert(err.response.data.message);
+    }
+
+    
+})

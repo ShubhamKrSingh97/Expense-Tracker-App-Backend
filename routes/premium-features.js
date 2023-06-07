@@ -5,4 +5,5 @@ const authenticate=require('../middlewares/authenticate');
 router.get('/rankings',authenticate,premiumFeaturesController.leaderBoard);
 router.get('/reports/monthly',authenticate,premiumFeaturesController.monthlyReport);
 router.get('/reports/yearly',authenticate,premiumFeaturesController.yearlyReport);
+router.get('/reports/download',authenticate,premiumFeaturesController.downloadReport);
 module.exports=router;
