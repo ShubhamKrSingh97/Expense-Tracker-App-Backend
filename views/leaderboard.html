@@ -4,17 +4,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style/expense.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Document</title>
 </head>
 <body>
-    <h1>Leader Board</h1>
-    <div class="table">
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Total Expense</th>
-            </tr>
+    <div class="heading">
+        <h1>Leader Board</h1>
+    </div>
+        
+  
+    <div class="table-wrap">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Total Expense</th>
+                </tr>
+            </thead>
+            
             <tbody id="t-body"></tbody>
         </table>
     </div>

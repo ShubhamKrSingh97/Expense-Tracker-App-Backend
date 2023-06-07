@@ -7,7 +7,8 @@
 .login-register {
     height: 100%;
     width: 100%;
-    background-image: linear-gradient(#342048, #f9eafe);
+    background-image: linear-gradient(black, #f9eafe);
+    background-color: black;
     background-position: center;
     background-size: cover;
     position: absolute;
@@ -43,10 +44,12 @@
     border: 0;
     outline: none;
     position: relative;
+    color: gray;
 }
 .toggle:focus{
     color: white;
 }
+
 
 #btn {
     top: 0;
@@ -54,7 +57,7 @@
     position: absolute;
     width: 110px;
     height: 100%;
-    background: linear-gradient(to bottom, #342048, #008080);
+    background-color: black;
     border-radius: 30px;
     transition: 0.5s;
 }
@@ -84,7 +87,8 @@
     cursor: pointer;
     display: block;
     margin: auto;
-    background: linear-gradient(to bottom, #342048, #008080);
+    background-color: black;
+    color: white;
     border: 0;
     outline: none;
     border-radius: 30px;

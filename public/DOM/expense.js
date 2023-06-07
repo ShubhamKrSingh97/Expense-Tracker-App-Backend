@@ -55,10 +55,12 @@ document.addEventListener('DOMContentLoaded', async (e) => {
 function displayOnScreen(obj) {
     const delBtn = document.createElement('button');
     delBtn.innerText = "Delete";
+    delBtn.classList.add('anyButton');
     const editBtn = document.createElement('button');
     editBtn.innerText = "Edit";
+    editBtn.classList.add('anyButton');
     const row = document.createElement('tr');
-    row.innerHTML = `<td>${obj.category}</td><td>${obj.description}</td><td>${obj.amount}</td>`;
+    row.innerHTML = `<td data-label="Category">${obj.category}</td><td data-label="Description">${obj.description}</td><td data-label="Amount">${obj.amount}</td>`;
     const actionCell = document.createElement('td');
     actionCell.appendChild(editBtn);
     actionCell.appendChild(delBtn);

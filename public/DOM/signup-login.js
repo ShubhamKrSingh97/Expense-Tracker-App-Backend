@@ -32,6 +32,7 @@ forgotPassBtn.addEventListener('click', (e) => {
     forgotPassForm.style.left = '50px';
 })
 
+
 //-----------------------Registration------------------------//
 
 const regEmail = document.getElementById('reg-email');

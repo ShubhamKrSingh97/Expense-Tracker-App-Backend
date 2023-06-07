@@ -42,14 +42,14 @@ function displayMonthly(res){
     const row=document.createElement('tr');
     const date=new Date(res.createdAt);
     const formattedDate = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-    row.innerHTML=`<td>${formattedDate}</td><td>${res.description}</td><td>${res.amount}</td>`;
+    row.innerHTML=`<td data-label="Date">${formattedDate}</td><td data-label="Description">${res.description}</td data-label="Amount"><td>${res.amount}</td>`;
     monthly_t_body.append(row);
 }
 
 function displayYearly(res){
     const date=new Date(0,res.month-1).toLocaleDateString('en-us',{month:'long'});
     const row=document.createElement('tr');
-    row.innerHTML=`<td>${date}</td><td>${res.totalExpense}</td>`;
+    row.innerHTML=`<td data-label="Date">${date}</td><td data-label="Total Expense">${res.totalExpense}</td>`;
     yearly_t_body.append(row);
 }
 downloadReportsBtn.addEventListener('click',async (e)=>{
