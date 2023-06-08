@@ -7,11 +7,9 @@ const path = require('path');
 const cors = require('cors');
 
 
-const addUserRoute = require('./routes/add-user-route');
-const userLoginRoute=require('./routes/user-login-route');
-const addExpenseRoute=require('./routes/add-expense-route');
-const getAllExpensesRoute=require('./routes/get-all-expenses-route');
-const deleteExpenseRoute=require('./routes/delete-expense-route');
+const userRoute = require('./routes/user-route');
+const expenseRoute=require('./routes/expense-route');
+
 const purchasePremiumRoute=require('./routes/purchase-premium-route');
 const premiumFeaturesRoute=require('./routes/premium-features');
 const forgotPassRoute=require('./routes/forgot-pass-route');
@@ -32,11 +30,10 @@ app.get('/expense-tracker',(req,res)=>{
     });
 });
 
-app.use(addUserRoute);
-app.use(userLoginRoute);
-app.use(addExpenseRoute);
-app.use(getAllExpensesRoute);
-app.use(deleteExpenseRoute);
+app.use(userRoute);
+
+app.use(expenseRoute);
+
 app.use(purchasePremiumRoute);
 
 app.get('/premium/leaderboard',(req,res)=>{

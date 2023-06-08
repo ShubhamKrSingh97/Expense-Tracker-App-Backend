@@ -22,7 +22,6 @@ function uploadtoS3(expenses,filename){
                     reject(err);
                 }
                 else{
-                    console.log(s3response);
                     resolve(s3response.Location);  
                 }
             })
