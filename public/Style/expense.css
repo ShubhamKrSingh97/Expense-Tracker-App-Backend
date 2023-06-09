@@ -52,6 +52,7 @@ body {
   padding: 20px;
   margin: 20px;
   border-radius: 8px;
+  position: relative;
 }
 
 .expbar label {
@@ -159,8 +160,9 @@ body {
   }
   .table tbody tr td {
     text-align: right;
-    padding-left: 50%;
+    padding-left: 40%;
     position: relative;
+    word-wrap: break-word;
   }
   .table td:before {
     content: attr(data-label);
@@ -189,4 +191,30 @@ body {
   display: block;
   margin: 0 auto;
   box-shadow:0 0 5px 5px #6E6E6E;
+}
+#paginate{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.page-btn{
+  background-color:transparent;
+  outline: none;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 50%;
+  margin: 0 5px ;
+  cursor: pointer;
+}
+.currPage{
+  background-color: #000000;
+  color: white;
+}
+.limit {
+  position: absolute;
+  bottom: 5px;
+  right: 20px;
+}
+#limit{
+  cursor: pointer;
 }

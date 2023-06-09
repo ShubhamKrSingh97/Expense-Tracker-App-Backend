@@ -46,8 +46,12 @@ Expense.belongsTo(User, { foreignKey: 'userId' });
             }
         },options);
     }
-    static findAllExpenses(id) {
-        return Expense.findAll({where:{userId:id}});
-    }
+    static findAllExpenses(id, offset, limit) {
+        return Expense.findAll({
+          where: { userId: id },
+          offset: offset,
+          limit: limit,
+        });
+      }
 }
 module.exports={Expense,ExpenseModel};

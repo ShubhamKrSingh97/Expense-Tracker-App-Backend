@@ -47,7 +47,18 @@
       </div>
       <button type="submit" class="anyButton">Add Expense</button>
     </form>
+    <div class="limit">
+      <label for="limit">Show:</label>
+      <select name="limit" id="limit">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+      </select>
+     
+    </div>
   </div>
+
   <div class="table-wrap">
     <table class="table">
       <thead>
@@ -61,6 +72,7 @@
       <tbody id="tbody"></tbody>
     </table>
   </div>
+  <div id="paginate"></div>
   <script src="/DOM/expense.js"></script>
 </body>
 

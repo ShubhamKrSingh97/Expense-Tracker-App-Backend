@@ -4,8 +4,9 @@ const amount = document.getElementById('exp-amt');
 const description = document.getElementById('exp-desc');
 const tbody = document.getElementById('tbody');
 const premiumBtn = document.getElementById('premium-btn');
-const leaderBoardBtn=document.getElementById('leader-btn');
-
+const leaderBoardBtn = document.getElementById('leader-btn');
+const paginationContainer = document.getElementById('paginate');
+const selectLimit = document.getElementById('limit');
 expenseForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     let token = localStorage.getItem('key');
@@ -33,24 +34,79 @@ function decodeJwtToken(token) {
     const rawPayload = atob(base64); // Decode the base64-encoded payload
     const payload = JSON.parse(rawPayload); // Parse the JSON payload
     return payload;
-  }
+}
 
 document.addEventListener('DOMContentLoaded', async (e) => {
-    
+    currentPage = 1;
     let token = localStorage.getItem('key');
-    if(decodeJwtToken(token).premium){
-        premiumBtn.style.display='none';
+    if (decodeJwtToken(token).premium) {
+        premiumBtn.style.display = 'none';
     }
+    var limit = JSON.parse(localStorage.getItem('limit'));
+    if (limit) {
+        selectLimit.value = limit;
+        pagination(currentPage, limit);
+    }
+    else {
+        pagination(currentPage, limit = 5);
+    }
+
+});
+selectLimit.addEventListener('change', () => {
+    console.log(selectLimit.value);
+    tbody.innerHTML = "";
+    pagination(currentPage, selectLimit.value);
+})
+
+function addPageButtons(res) {
+    paginationContainer.innerHTML = "";
+    if (res.data.hasPrev) {
+        const prevBtn = document.createElement('button');
+        prevBtn.innerText = res.data.prevPage;
+        prevBtn.classList.add('page-btn');
+        prevBtn.addEventListener('click', () => {
+            pagination(res.data.prevPage, limit);
+            tbody.innerHTML = "";
+        });
+        paginationContainer.append(prevBtn);
+    }
+    const currentPage = res.data.currentPage;
+    const limit = localStorage.getItem('limit');
+    const currentBtn = document.createElement('button');
+    currentBtn.innerText = currentPage;
+    currentBtn.classList.add('page-btn', 'currPage');
+    paginationContainer.append(currentBtn);
+    if (res.data.hasNext) {
+
+        const nextBtn = document.createElement('button');
+        nextBtn.innerText = res.data.nextPage;
+        nextBtn.classList.add('page-btn')
+        nextBtn.addEventListener('click', () => {
+            pagination(res.data.nextPage, limit);
+            tbody.innerHTML = "";
+        });
+        paginationContainer.append(nextBtn);
+    }
+
+}
+
+async function pagination(currentPage, limit) {
     try {
-        const res = await axios.get("http://localhost:4000/get-all-expenses", { headers: { "Authorization": token } });
-        for (let i = 0; i < res.data.length; i++) {
-            displayOnScreen(res.data[i]);
+        const res = await axios.get(`http://localhost:4000/get-all-expenses?page=${currentPage}&limit=${limit}`, { headers: { "Authorization": token } });
+
+        currentPage = res.data.currentPage;
+
+        localStorage.setItem('limit', res.data.limit)
+
+        addPageButtons(res);
+        for (let i = 0; i < res.data.allexp.length; i++) {
+            displayOnScreen(res.data.allexp[i]);
         };
     } catch (err) {
         console.log(err.response.data.message);
     }
 
-})
+}
 
 function displayOnScreen(obj) {
     const delBtn = document.createElement('button');
@@ -77,12 +133,10 @@ function displayOnScreen(obj) {
         };
 
     });
-    editBtn.addEventListener('click', (e) => {
-        amount.value = obj.amount;
-        description.value = obj.description;
+    editBtn.addEventListener('click', async (e) => {
         tbody.removeChild(row);
         try {
-            axios.delete(`http://localhost:4000/delete-expense/${obj.id}`, { headers: { "Authorization": token } });
+            await axios.delete(`http://localhost:4000/delete-expense/${obj.id}`, { headers: { "Authorization": token } });
         } catch (err) {
             alert(err.response.data.message);
         }
@@ -106,9 +160,9 @@ premiumBtn.addEventListener('click', async (e) => {
                     payment_id: response.razorpay_payment_id,
                     status: "SUCCESS"
                 }, { headers: { 'Authorization': token } });
-                localStorage.setItem('key',res.data.token);
-                premiumBtn.style.display='none';
-                
+                localStorage.setItem('key', res.data.token);
+                premiumBtn.style.display = 'none';
+
                 alert(res.data.message);
             }
         }
@@ -122,22 +176,22 @@ premiumBtn.addEventListener('click', async (e) => {
     }
 
 });
-leaderBoardBtn.addEventListener('click',async(e)=>{
+leaderBoardBtn.addEventListener('click', async (e) => {
     const token = localStorage.getItem('key');
-    if(decodeJwtToken(token).premium){
-       window.location.href="/premium/leaderboard"
+    if (decodeJwtToken(token).premium) {
+        window.location.href = "/premium/leaderboard"
     }
-    else{
+    else {
         alert('Buy Premium to access Premium features');
     }
 });
-const reportsButton=document.getElementById('reports-btn');
-reportsButton.addEventListener('click',async (e)=>{
-    const token=localStorage.getItem('key');
-    if(decodeJwtToken(token).premium){
-        window.location.href="/premium/reports"
+const reportsButton = document.getElementById('reports-btn');
+reportsButton.addEventListener('click', async (e) => {
+    const token = localStorage.getItem('key');
+    if (decodeJwtToken(token).premium) {
+        window.location.href = "/premium/reports"
     }
-    else{
+    else {
         alert('Buy Premium to access Premium features');
     }
 })

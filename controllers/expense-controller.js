@@ -49,9 +49,29 @@ const deleteExpense = async (req, res) => {
 
 const getAllExpenses = async (req, res) => {
     try {
-        let exp = await ExpenseModel.findAllExpenses(req.user.id);
-        return res.status(202).json(exp);
+        const currentPage=parseInt(req.query.page);
+        const limit=parseInt(req.query.limit);
+        console.log(currentPage);
+        const offset=(currentPage-1)*limit;
+        const [exp, total] = await Promise.all([
+            ExpenseModel.findAllExpenses(req.user.id, offset, limit),
+            Expense.count({where:{userId:req.user.id}}),
+          ]);
+        const nextPage=currentPage+1;
+        const prevPage=currentPage-1;
+        var hasPrev=prevPage>0;
+        var hasNext=nextPage <= Math.ceil(total / limit);
+        return res.status(202).json({
+            allexp:exp,
+            hasPrev:hasPrev,
+            hasNext: hasNext,
+            currentPage:currentPage,
+            nextPage:nextPage,
+            prevPage:prevPage,
+            limit:limit
+        });
     } catch (err) {
+        console.log(err);
         return res.status(500).json({
             message: "Internal issue.Try again later"
         });
