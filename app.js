@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
     })
 });
 
+
 app.get('/expense-tracker',(req,res)=>{
     fs.readFile(path.join(__dirname, 'views', 'expense.html'), 'utf-8', (err, data) => {
         res.send(data);

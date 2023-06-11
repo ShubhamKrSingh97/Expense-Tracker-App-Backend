@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Expense-Tracker</title>
     <link rel="stylesheet" href="/Style/signup-login.css">
+    <link rel="stylesheet" href="/Style/global.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 </head>
@@ -16,7 +17,7 @@
         <div class="form-box">
             <div class="button-box">
                 <div id="btn"></div>
-                <button type="button" class="toggle" id="toggle-login">Log in</button>
+                <button type="button" class="toggle active" id="toggle-login">Log in</button>
                 <button type="button" class="toggle" id="toggle-register">Register</button>
             </div>
             <form class="input-group" id="login">
@@ -35,11 +36,11 @@
             </form>
             <form class="input-group" id="forgot-pass">
                 <input type="email" class="input-field" id="forgot-email" placeholder="Enter Email" required>
-                <button type="submit" class="submit-btn" id="forgot-sub-btn">Submit</button>
+                <button type="submit" class="submit-btn" id="forgot-sub-btn">Send reset link</button>
             </form>
         </div>
     </div>
-   
+    
     <script src="/DOM/signup-login.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
 </body>

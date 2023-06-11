@@ -18,6 +18,8 @@ body {
   position: sticky;
   top:0;
   z-index: 100;
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav button {
@@ -217,4 +219,31 @@ body {
 }
 #limit{
   cursor: pointer;
+}
+.back{
+  cursor: pointer;
+  margin: 5px 15px;
+  color: white;
+  font-size: large;
+  font-weight: bold;
+  width: 30px;
+  height: 30px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0,0.5);
+}
+.back:hover{
+  background-color: rgba(0, 0, 0,0.3);
+}
+.footer{
+  background-color: #000000;
+  color: white;
+  min-height: 50px;
+  display: flex;
+  justify-content: center;
+ align-items: center;
+}
+.footer p i{
+  color: red;
 }

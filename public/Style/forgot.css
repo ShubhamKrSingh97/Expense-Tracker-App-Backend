@@ -1,0 +1,44 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    height: 100vh;
+    background-image: linear-gradient(black, #f9eafe);
+
+}
+.update-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+#update-password{
+    width: 100%;
+    padding: 10px 0;
+    margin: 5px 5px;
+    border-left: 0;
+    border-top: 0;
+    border-right: 0;
+    border-bottom: 1px solid white;
+    outline: none;
+    background: transparent;
+}
+
+.submit-btn {
+    width: 85%;
+    padding: 10px 30px;
+    cursor: pointer;
+    display: block;
+    margin: 15px auto;
+    background-color: black;
+    color: white;
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    transition: .3s;
+}
+#update-password::placeholder{
+    color: white;
+  
+}

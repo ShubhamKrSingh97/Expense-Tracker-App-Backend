@@ -8,7 +8,14 @@ var forgotPassBtn = document.getElementById('forgot');
 var forgotPassSubBtn = document.getElementById('forgot-sub-btn');
 //------------login and registration form toggling-----------//
 
-document.querySelector('#toggle-login').focus();
+let toggles = Array.from(document.querySelectorAll('.toggle'));
+toggles.forEach(toggle=>{
+    toggle.addEventListener('click',e=>{
+        toggles.forEach(toggle=>{
+            toggle.classList.toggle('active')
+        })
+    })
+})
 
 toggleRegister.addEventListener('click', (e) => {
     e.preventDefault();
@@ -54,14 +61,15 @@ regForm.addEventListener('submit', async (e) => {
             regName.value = "";
             regPassword.value = "";
             checkBox.checked = false;
+            customAlert("Registration Complete",'modal-success')
         }
         catch (err) {
-            alert(err.response.data.message);
+            customAlert(err.response.data.message,'modal-success');
         }
 
     }
     else {
-        alert("Please fill in all the details");
+        alert("Please fill in all the details",'modal-danger');
     }
 });
 
@@ -78,16 +86,15 @@ loginForm.addEventListener('submit', async (e) => {
         }
         try {
             let msg = await axios.post(`http://localhost:4000/user-login`, obj);
-            alert(msg.data.message);
-            console.log(msg.data);
+            customAlert(msg.data.message, 'modal-success');
             localStorage.setItem('key', msg.data.token);
             window.location.href = "expense-tracker";
         } catch (err) {
-            alert(err.response.data.message);
+            customAlert(err.response.data.message, 'modal-danger');
         }
     }
     else {
-        alert("Please fill in all the details");
+        customAlert("Please fill in all the details",'modal-danger');
     }
 
 });
@@ -101,9 +108,37 @@ forgotPassForm.addEventListener('submit',async (e) => {
     }
     try{
         const res= await axios.post("http://localhost:4000/password/forgot-password", obj);
-        alert(res.data.message);
+        customAlert(res.data.message,'modal-success');
     }catch(err){
-        alert(err.response.data.message);
+        customAlert(err.response.data.message,'modal-danger');
     }
     
 });
+
+
+function customAlert(text, classNames=''){
+    const modalWrapper = document.createElement('div');
+    modalWrapper.classList.add('modal-wrapper');
+    const modalContent = document.createElement('div');
+    modalContent.classList.add('modal-content');
+    modalContent.className+=' '+classNames;
+    const span = document.createElement('span');
+    span.classList.add('close');
+    span.innerHTML='&times;';
+    const p = document.createElement('p');
+    p.textContent=text;
+    modalContent.appendChild(span);
+    modalContent.appendChild(p);
+    modalWrapper.appendChild(modalContent);
+    document.body.appendChild(modalWrapper);
+    function close(){
+        document.body.removeChild(document.querySelector('.modal-wrapper')); 
+    }
+    span.onclick=close;
+    modalWrapper.addEventListener('click',e=>{
+        if(e.target.className==='modal-wrapper'){
+            close();
+        }
+    });
+    setTimeout(close,3500);
+}
