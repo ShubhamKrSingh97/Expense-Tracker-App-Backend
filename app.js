@@ -4,16 +4,17 @@ const bodyParser = require('body-parser');
 const {sequelize} = require('./util/database');
 const fs = require('fs');
 const path = require('path');
-const cors = require('cors');
+//const helmet=require('helmet');
 
+//app.use(helmet.contentSecurityPolicy({ directives: cspDirectives }));
+require('dotenv').config();
 
 const userRoute = require('./routes/user-route');
 const expenseRoute=require('./routes/expense-route');
-
 const purchasePremiumRoute=require('./routes/purchase-premium-route');
 const premiumFeaturesRoute=require('./routes/premium-features');
 const forgotPassRoute=require('./routes/forgot-pass-route');
-app.use(cors());
+
 app.use(bodyParser.json({ encoded: false }));
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -58,5 +59,5 @@ app.use(forgotPassRoute);
 
 
 sequelize.sync().then(result => {
-    app.listen('4000');
+    app.listen(process.env.PORT || 4000);
 });

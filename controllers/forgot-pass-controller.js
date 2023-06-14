@@ -5,8 +5,8 @@ const { UserModel } = require('../models/user');
 const bcrypt = require('bcrypt');
 const { Forgot, ForgotPassModel } = require('../models/forgotpass');
 const forgotPass = async (req, res) => {
+    const transactions=await sequelize.transaction();
     try {
-        const transactions=await sequelize.transaction();
         const result = await UserModel.userLogin(req.body.email);
         if (result === 0) {
             throw new Error();
