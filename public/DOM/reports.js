@@ -5,7 +5,7 @@ const backBtn=document.getElementById('back-btn');
 document.addEventListener('DOMContentLoaded',async (e)=>{
     const token=localStorage.getItem('key');
     try{
-   const res= await axios.get("http://localhost:4000/premium/reports/yearly",{headers:{'Authorization': token }});
+   const res= await axios.get("https://expense-tracker-wz8h.onrender.com/premium/reports/yearly",{headers:{'Authorization': token }});
     res.data.allExpenses.sort((a,b)=>a.month-b.month);
     for(let i=0;i<res.data.allExpenses.length;i++){
         displayYearly(res.data.allExpenses[i]);
@@ -21,7 +21,7 @@ dropDown.addEventListener('change',async (e)=>{
     const token=localStorage.getItem('key');
     const month=dropDown.value;
     try{
-        const res=await axios.get(`http://localhost:4000/premium/reports/monthly`,{headers:{'Authorization':token,'month':month}});
+        const res=await axios.get(`https://expense-tracker-wz8h.onrender.com/premium/reports/monthly`,{headers:{'Authorization':token,'month':month}});
         console.log(res);
         res.data.allExpenses.sort((a,b)=>{
             dateA=new Date(a.createdAt);
@@ -65,7 +65,7 @@ downloadReportsBtn.addEventListener('click',async (e)=>{
     let text = downloadReportsBtn.textContent;
     try{
         downloadReportsBtn.textContent='downloading...'
-        const res=await axios.get("http://localhost:4000/premium/reports/download",{headers:{'Authorization':token,'month':month}});
+        const res=await axios.get("https://expense-tracker-wz8h.onrender.com/premium/reports/download",{headers:{'Authorization':token,'month':month}});
         console.log(res.data.message);
         const a=document.createElement('a');
         a.href=res.data.message;

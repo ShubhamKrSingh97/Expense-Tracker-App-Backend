@@ -10,7 +10,7 @@ updatePassForm.addEventListener('submit',async (e)=>{
         id:id
     }
     try{
-        const res= await axios.post("http://localhost:4000/password/update-password",obj);
+        const res= await axios.post("https://expense-tracker-wz8h.onrender.com/password/update-password",obj);
         customAlert(res.data.message,'modal-success');
         window.location.href="/";
     }catch(err){
