@@ -3,11 +3,13 @@ const bcrypt = require('bcrypt');
 const {sequelize} = require('../util/database');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const util=require('util');
 
+const hashPassword = util.promisify(bcrypt.hash);
 const addUser = async (req, res) => {
     const transactions =await sequelize.transaction();
     let { name, email, pass } = req.body;
-    bcrypt.hash(pass, 10, async (err, password) => {
+     await hashPassword(pass, 10, async (err, password) => {
         let user = new UserModel(name, email, password);
         try {
             await user.addUser({transactions});

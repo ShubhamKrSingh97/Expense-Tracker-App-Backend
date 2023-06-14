@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded',async (e)=>{
 
 function displayLeaderBoard(res,i){
     const row=document.createElement('tr');
-    row.innerHTML=`<td data-label="#">${i}</td><td data-label="Name">${res.Name}</td><td data-label="Total Expense">${res.TotalExpense}</td>`;
+    row.innerHTML=`<td data-label="#">${i}</td><td data-label="Name">${res.Name}</td><td data-label="Total Expense">${res.TotalExpense}/-</td>`;
     tbody.append(row);
 }
 

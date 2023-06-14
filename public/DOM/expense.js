@@ -95,7 +95,12 @@ function addPageButtons(res) {
 async function pagination(currentPage, limit) {
     try {
         const res = await axios.get(`http://localhost:4000/get-all-expenses?page=${currentPage}&limit=${limit}`, { headers: { "Authorization": token } });
-
+       console.log(res);
+        res.data.allexp.sort((a,b)=>{
+            let dateA=new Date(a.createdAt);
+            let dateB= new Date(b.createdAt);
+            return dateA-dateB;
+        })
         currentPage = res.data.currentPage;
 
         localStorage.setItem('limit', res.data.limit)
@@ -118,7 +123,7 @@ function displayOnScreen(obj) {
     editBtn.innerText = "Edit";
     editBtn.classList.add('anyButton');
     const row = document.createElement('tr');
-    row.innerHTML = `<td data-label="Category">${obj.category}</td><td data-label="Description">${obj.description}</td><td data-label="Amount">${obj.amount}</td>`;
+    row.innerHTML = `<td data-label="Category">${obj.category}</td><td data-label="Description">${obj.description}</td><td data-label="Amount">${obj.amount}/-</td>`;
     const actionCell = document.createElement('td');
     actionCell.appendChild(editBtn);
     actionCell.appendChild(delBtn);

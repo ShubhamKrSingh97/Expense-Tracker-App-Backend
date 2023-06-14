@@ -51,6 +51,7 @@ Expense.belongsTo(User, { foreignKey: 'userId' });
           where: { userId: id },
           offset: offset,
           limit: limit,
+          order: [['createdAt', 'DESC']]
         });
       }
 }
