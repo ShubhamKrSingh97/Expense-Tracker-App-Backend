@@ -3,10 +3,9 @@ const backBtn=document.getElementById('back-btn');
 document.addEventListener('DOMContentLoaded',async (e)=>{
     const token=localStorage.getItem('key');
     try{
-   const res= await axios.get("https://expense-tracker-wz8h.onrender.com/premium/rankings",{headers:{'Authorization': token }});
+   const res= await axios.get("/premium/rankings",{headers:{'Authorization': token }});
     res.data.allUser.sort((a,b)=>b.TotalExpense-a.TotalExpense);
    for(let i=0;i<res.data.allUser.length;i++){
-    console.log(res.data.allUser[i]);
     displayLeaderBoard(res.data.allUser[i],i+1);
    }
 }catch(err){
@@ -16,7 +15,7 @@ document.addEventListener('DOMContentLoaded',async (e)=>{
 
 function displayLeaderBoard(res,i){
     const row=document.createElement('tr');
-    row.innerHTML=`<td data-label="#">${i}</td><td data-label="Name">${res.Name}</td><td data-label="Total Expense">${res.TotalExpense}/-</td>`;
+    row.innerHTML=`<td data-label="#">${i}</td><td data-label="Name">${res.name}</td><td data-label="Total Expense">${res.totalExpense}/-</td>`;
     tbody.append(row);
 }
 

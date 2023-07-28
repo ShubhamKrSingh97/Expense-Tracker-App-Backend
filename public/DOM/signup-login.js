@@ -56,7 +56,7 @@ regForm.addEventListener('submit', async (e) => {
             pass: regPassword.value
         };
         try {
-            await axios.post("https://expense-tracker-wz8h.onrender.com/add-user", obj)
+            await axios.post("/add-user", obj)
             regEmail.value = "";
             regName.value = "";
             regPassword.value = "";
@@ -85,7 +85,7 @@ loginForm.addEventListener('submit', async (e) => {
             email: loginEmail.value
         }
         try {
-            let msg = await axios.post(`https://expense-tracker-wz8h.onrender.com/user-login`, obj);
+            let msg = await axios.post(`/user-login`, obj);
             customAlert(msg.data.message, 'modal-success');
             localStorage.setItem('key', msg.data.token);
             window.location.href = "expense-tracker";
@@ -107,7 +107,7 @@ forgotPassForm.addEventListener('submit',async (e) => {
         email: forgotPassEmail.value
     }
     try{
-        const res= await axios.post("https://expense-tracker-wz8h.onrender.com/password/forgot-password", obj);
+        const res= await axios.post("/password/forgot-password", obj);
         customAlert(res.data.message,'modal-success');
     }catch(err){
         customAlert(err.response.data.message,'modal-danger');

@@ -18,7 +18,7 @@ expenseForm.addEventListener('submit', async (e) => {
             description: description.value
         }
         try {
-            const res = await axios.post("https://expense-tracker-wz8h.onrender.com/add-expense", obj, { headers: { "Authorization": token } });
+            const res = await axios.post("/add-expense", obj, { headers: { "Authorization": token } });
             displayOnScreen(res.data.expense);
             expenseForm.reset()
         } catch (err) {
@@ -94,7 +94,8 @@ function addPageButtons(res) {
 
 async function pagination(currentPage, limit) {
     try {
-        const res = await axios.get(`https://expense-tracker-wz8h.onrender.com/get-all-expenses?page=${currentPage}&limit=${limit}`, { headers: { "Authorization": token } });
+        const token=localStorage.getItem('key');
+        const res = await axios.get(`/get-all-expenses?page=${currentPage}&limit=${limit}`, { headers: { "Authorization": token } });
        console.log(res);
         res.data.allexp.sort((a,b)=>{
             let dateA=new Date(a.createdAt);
@@ -138,7 +139,7 @@ function displayOnScreen(obj) {
     delBtn.addEventListener('click', (e) => {
         tbody.removeChild(row);
         try {
-            axios.delete(`https://expense-tracker-wz8h.onrender.com/delete-expense/${obj.id}`, { headers: { "Authorization": token } });
+            axios.delete(`/delete-expense/${obj._id}`, { headers: { "Authorization": token } });
         } catch (err) {
             customAlert(err.response.data.message,'modal-success');
         };
@@ -150,7 +151,7 @@ function displayOnScreen(obj) {
             category.value=obj.category;
             amount.value=obj.amount;
             description.value=obj.description;
-            await axios.delete(`https://expense-tracker-wz8h.onrender.com/delete-expense/${obj.id}`, { headers: { "Authorization": token } });
+            await axios.delete(`/delete-expense/${obj._id}`, { headers: { "Authorization": token } });
         } catch (err) {
             customAlert(err.response.data.message,'modal-success');
         }
@@ -163,13 +164,13 @@ const token = localStorage.getItem('key');
 
 premiumBtn.addEventListener('click', async (e) => {
     try {
-        const response = await axios.get("https://expense-tracker-wz8h.onrender.com/buy-premium", { headers: { 'Authorization': token } });
+        const response = await axios.get("/buy-premium", { headers: { 'Authorization': token } });
         const { orderDetails } = response.data;
         var options = {
             key: response.data.key_id,
             order_id: orderDetails.id,
             handler: async function (response) {
-                const res = await axios.post('https://expense-tracker-wz8h.onrender.com/update-transaction', {
+                const res = await axios.post('/update-transaction', {
                     order_id: options.order_id,
                     payment_id: response.razorpay_payment_id,
                     status: "SUCCESS"
@@ -183,7 +184,7 @@ premiumBtn.addEventListener('click', async (e) => {
         const razorpayInstance = new Razorpay(options);
         razorpayInstance.open(options);
         razorpayInstance.on('payment.failed', async (response) => {
-            await axios.post("https://expense-tracker-wz8h.onrender.com/update-transaction", { status: 'FAILED', order_id: response.error.metadata.order_id }, { headers: { 'Authorization': token } });
+            await axios.post("/update-transaction", { status: 'FAILED', order_id: response.error.metadata.order_id }, { headers: { 'Authorization': token } });
         })
     } catch (err) {
         customAlert(err.response.data.message,'modal-danger');

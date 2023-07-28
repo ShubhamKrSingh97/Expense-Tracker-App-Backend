@@ -1,35 +1,15 @@
-const Sequelize=require('sequelize');
-const {sequelize}=require('../util/database');
-const {User}=require('./user');
-const Forgot=sequelize.define('forgotpasswords',{
-    id:{
-        type:Sequelize.UUID,
-        defaultValue:Sequelize.UUIDV4,
-        primaryKey:true
-    },
+const mongoose=require('mongoose');
+
+const forgotpassSchema= new mongoose.Schema({
     isActive:{
-        type:Sequelize.BOOLEAN,
-        allowNull:true
+        type:Boolean
     },
     userId:{
-        type:Sequelize.UUID
+        type:mongoose.Schema.ObjectId,
+        ref:'User',
+        required:true
     }
 });
-User.hasMany(Forgot,{ foreignKey: 'userId' });
-Forgot.belongsTo(User,{ foreignKey: 'userId' });
 
-const ForgotPassModel=class ForgotPass{
-    constructor(isActive,userId){
-        this.isActive=isActive,
-        this.userId=userId
-    }
-    addRequest(options){
-        return Forgot.create({
-            isActive:this.isActive,
-            userId:this.userId
-        },options)
-
-    }
-}
-
-module.exports={Forgot,ForgotPassModel};
+const ForgotPass=mongoose.model('forgotPassword',forgotpassSchema);
+module.exports=ForgotPass;
